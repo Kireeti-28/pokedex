@@ -3,12 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 )
 
-
-func startRepl() {
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -24,7 +24,7 @@ func startRepl() {
 		commandName := cleanedTextSlice[0]
 
 		availableCommands := getCommands()
-		
+
 		command, ok := availableCommands[commandName]
 
 		if !ok {
@@ -32,7 +32,10 @@ func startRepl() {
 			continue
 		}
 
-		command.callback();
+		err := command.callback(cfg)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 	}
 }
