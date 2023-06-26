@@ -6,6 +6,7 @@ type config struct {
 	pokeapiClient pokeapi.Client
 	nextLocationAreaURL *string
 	prevLocationAreaURL *string
+	pokemonCaught map[string]pokeapi.Pokemon
 }
 
 func main() {
@@ -13,6 +14,7 @@ func main() {
 		pokeapiClient: pokeapi.GetClient(),
 		nextLocationAreaURL: nil,
 		prevLocationAreaURL: nil,
+		pokemonCaught: make(map[string]pokeapi.Pokemon),
 	}
 
 

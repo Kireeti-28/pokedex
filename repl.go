@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 )
@@ -21,6 +20,11 @@ func startRepl(cfg *config) {
 			continue
 		}
 
+		args := []string{}
+		if len(cleanedTextSlice) > 1 {
+			args = cleanedTextSlice[1:]
+		}
+
 		commandName := cleanedTextSlice[0]
 
 		availableCommands := getCommands()
@@ -32,9 +36,9 @@ func startRepl(cfg *config) {
 			continue
 		}
 
-		err := command.callback(cfg)
+		err := command.callback(cfg, args...)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Print(err)
 		}
 
 	}
