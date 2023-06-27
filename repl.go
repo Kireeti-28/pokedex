@@ -38,7 +38,7 @@ func startRepl(cfg *config) {
 
 		err := command.callback(cfg, args...)
 		if err != nil {
-			fmt.Print(err)
+			fmt.Printf("%v\n", err)
 		}
 
 	}

@@ -42,6 +42,11 @@ func getCommands() map[string]cliCommand {
 			description: "View information about caught pokemon",
 			callback:    callbackInspect,
 		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Lists all your pokemons in your pokedex",
+			callback:    callbackPokedex,
+		},
 		"help": {
 			name:        "help",
 			description: "Prints the help menu",
@@ -141,7 +146,7 @@ func callbackCatch(cfg *config, args ...string) error {
 	const threshold = 50
 	randInt := rand.Intn(pokemon.BaseExperience)
 	if randInt > threshold {
-		return fmt.Errorf("failed to caught %s\n", pokemonName)
+		return fmt.Errorf("failed to caught %s", pokemonName)
 	}
 
 	cfg.pokemonCaught[pokemonName] = pokemon
@@ -172,6 +177,16 @@ func callbackInspect(cfg *config, args ...string) error {
 	fmt.Println("Types:")
 	for _, typ := range pokemon.Types {
 		fmt.Printf(" - %s\n", typ.Type.Name)
+	}
+
+	return nil
+}
+
+func callbackPokedex(cfg *config, args ...string) error {
+	fmt.Println("Pokemin in pokedex:")
+
+	for _, pokemon := range cfg.pokemonCaught {
+		fmt.Printf(" - %s\n", pokemon.Name)
 	}
 
 	return nil
